@@ -8,12 +8,26 @@ public:
     vector<vector<int>> board;
     int hamDistance;
     int manDistance;
-    pair<int,int> zero_block;
     Npuzzle *parent;
-    Npuzzle *child;
 
     Npuzzle(vector<vector<int>> &board){
         this->board = board;
+        hamDistance = this->hamming_distance();
+        manDistance = this->manhattan_distance();
+    }
+
+    bool is_solvable(){
+        int N = board.size();
+        if(N%2){
+            return ((inversion_count()%2)==0);
+        }
+        else{
+            int temp = inversion_count();
+            pair<int,int> zero_block = find_zero_block();
+            temp += (N-1-zero_block.first);
+            
+            return (temp%2 == 0);
+        }
     }
 
     int hamming_distance(){
@@ -45,6 +59,41 @@ public:
         return distance;
     }
 
+    int inversion_count(){
+        int N = board.size();
+        int count = 0;
+        vector<int> temp;
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(board[i][j] != 0){
+                    temp.push_back(board[i][j]);
+                }
+            }
+        }
+
+        for(int i=0;i<temp.size();i++){
+            for(int j=i+1; j<temp.size(); j++){
+                if(temp[j] < temp[i])count++;
+            }
+        }
+
+        return count;
+    }
+
+
+    pair<int,int> find_zero_block(){
+        pair<int,int> temp;
+        int N = board.size();
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(board[i][j] == 0){
+                    temp.first = i;
+                    temp.second = j;
+                }
+            }
+        }
+        return temp;
+    }
 };
 
 int main()
@@ -61,5 +110,5 @@ int main()
     }
 
     Npuzzle npuzzle(board);
-    cout << npuzzle.manhattan_distance() << endl;
+    cout << npuzzle.is_solvable()<< endl;
 }
