@@ -9,22 +9,24 @@ class Npuzzle{
 
 public:
     vector<vector<int>> board;
-    int hamDistance;
-    int manDistance;
     int priority;
     int depth;
+    int hamDistance;
+    int manDistance;
     Npuzzle *parent;
+    int previous_move = -1;
+    pair<int,int> zero_pos;
 
     Npuzzle(vector<vector<int>> board,int depth){
         this->board = board;
         this->depth = depth;
-        hamDistance = this->hamming_distance();
-        manDistance = this->manhattan_distance();
-        this->priority = manDistance + depth;
     }
 
-    void calculate_priority(){
-        priority = manDistance + depth;
+    void calculate_priority(bool optimized = 1){
+        if(optimized)
+            priority = manhattan_distance() + depth;
+        else
+            priority = hamming_distance() + depth;
     }
 
     bool is_solvable(){
@@ -102,9 +104,11 @@ public:
                 if(board[i][j] == 0){
                     temp.first = i;
                     temp.second = j;
+                    break;
                 }
             }
         }
+        zero_pos = temp;
         return temp;
     }
 
@@ -146,6 +150,8 @@ int main()
     int moves = 0;
     priority_queue<Npuzzle*,vector<Npuzzle*>,Comparator> pq;
     Npuzzle* npuzzle = new Npuzzle(board,moves);
+    npuzzle->calculate_priority();
+    npuzzle->find_zero_block();
     pq.push(npuzzle);
 
 
@@ -161,26 +167,32 @@ int main()
         Npuzzle* tmp = pq.top();
         pq.pop();
 
-        if(tmp->hamming_distance()==0){
-            cout << tmp->depth << endl;
+        if(tmp->manDistance==0){
             ans = tmp;
             break;
         }
 
-        pair<int,int> zero_block = tmp->find_zero_block();
-        int old_row = zero_block.first;
-        int old_column = zero_block.second;
+        int old_row = tmp->zero_pos.first;
+        int old_column = tmp->zero_pos.second;
 
         for(int i=0; i<4; i++){
             int new_row = old_row + direction[i][0];
             int new_column = old_column + direction[i][1];
             if(new_row >= 0 && new_row < N && new_column >= 0 && new_column < N){
+
+                if(tmp->previous_move == 0 && i == 1)continue;
+                if(tmp->previous_move == 1 && i == 0)continue;
+                if(tmp->previous_move == 2 && i == 3)continue;
+                if(tmp->previous_move == 3 && i == 2)continue;
+
+
                 Npuzzle* child = new Npuzzle(tmp->board,moves);
                 swap(child->board[old_row][old_column],child->board[new_row][new_column]);
-                child->hamming_distance();
-                child->manhattan_distance();
+                child->zero_pos.first = new_row;
+                child->zero_pos.second = new_column;
                 child->calculate_priority();
                 child->parent = tmp;
+                child->previous_move = i;
                 pq.push(child);
             }
         }
@@ -188,14 +200,18 @@ int main()
 
     stack<Npuzzle*> stk;
     stk.push(ans);
+    int move = 0;
     while(ans->parent!=NULL){
+        move++;
         stk.push(ans->parent);
         ans = ans->parent;
     }
+
+    cout << "Minimum number of moves = " << move << endl;
 
     while(!stk.empty()){
         stk.top()->print();
         stk.pop();
     }
-
+    return 0;
 }
