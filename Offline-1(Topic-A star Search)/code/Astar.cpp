@@ -114,7 +114,6 @@ public:
 
     void print(){
         int N = board.size();
-        cout << endl;
         for(int i=0; i<N; i++){
             for(int j=0; j<N; j++){
                 cout << board[i][j] << " ";
@@ -147,9 +146,8 @@ int main()
         }
     }
 
-    int moves = 0;
     priority_queue<Npuzzle*,vector<Npuzzle*>,Comparator> pq;
-    Npuzzle* npuzzle = new Npuzzle(board,moves);
+    Npuzzle* npuzzle = new Npuzzle(board,0);
     npuzzle->calculate_priority();
     npuzzle->find_zero_block();
     pq.push(npuzzle);
@@ -163,7 +161,6 @@ int main()
     Npuzzle* ans;
 
     while(!pq.empty()){
-        moves++;
         Npuzzle* tmp = pq.top();
         pq.pop();
 
@@ -181,12 +178,12 @@ int main()
             if(new_row >= 0 && new_row < N && new_column >= 0 && new_column < N){
 
                 if(tmp->previous_move == 0 && i == 1)continue;
-                if(tmp->previous_move == 1 && i == 0)continue;
-                if(tmp->previous_move == 2 && i == 3)continue;
-                if(tmp->previous_move == 3 && i == 2)continue;
+                else if(tmp->previous_move == 1 && i == 0)continue;
+                else if(tmp->previous_move == 2 && i == 3)continue;
+                else if(tmp->previous_move == 3 && i == 2)continue;
 
 
-                Npuzzle* child = new Npuzzle(tmp->board,moves);
+                Npuzzle* child = new Npuzzle(tmp->board,tmp->depth + 1);
                 swap(child->board[old_row][old_column],child->board[new_row][new_column]);
                 child->zero_pos.first = new_row;
                 child->zero_pos.second = new_column;
@@ -208,6 +205,7 @@ int main()
     }
 
     cout << "Minimum number of moves = " << move << endl;
+    cout << endl;
 
     while(!stk.empty()){
         stk.top()->print();
