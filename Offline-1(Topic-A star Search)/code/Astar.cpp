@@ -11,8 +11,7 @@ public:
     vector<vector<int>> board;
     int priority;
     int depth;
-    int hamDistance;
-    int manDistance;
+    int heuristic;
     Npuzzle *parent;
     int previous_move = -1;
     pair<int,int> zero_pos;
@@ -53,7 +52,7 @@ public:
                 }
             }
         }
-        hamDistance = distance;
+        heuristic = distance;
         return distance;
     }
 
@@ -70,7 +69,7 @@ public:
                 }
             }
         }
-        manDistance = distance;
+        heuristic = distance;
         return distance;
     }
 
@@ -159,12 +158,15 @@ int main()
     }
 
     Npuzzle* ans;
+    int expanded_nodes = 0;
+    int explored_nodes = 1;
 
     while(!pq.empty()){
+        expanded_nodes++;
         Npuzzle* tmp = pq.top();
         pq.pop();
 
-        if(tmp->manDistance==0){
+        if(tmp->heuristic==0){
             ans = tmp;
             break;
         }
@@ -182,7 +184,7 @@ int main()
                 else if(tmp->previous_move == 2 && i == 3)continue;
                 else if(tmp->previous_move == 3 && i == 2)continue;
 
-
+                explored_nodes++;
                 Npuzzle* child = new Npuzzle(tmp->board,tmp->depth + 1);
                 swap(child->board[old_row][old_column],child->board[new_row][new_column]);
                 child->zero_pos.first = new_row;
@@ -194,6 +196,10 @@ int main()
             }
         }
     }
+
+    /*   To print number of explored nodes and expanded nodes   */
+    cout << "Number of expanded nodes = " << expanded_nodes << endl;
+    cout << "Number of explored nodes = " << explored_nodes << endl;
 
     stack<Npuzzle*> stk;
     stk.push(ans);
