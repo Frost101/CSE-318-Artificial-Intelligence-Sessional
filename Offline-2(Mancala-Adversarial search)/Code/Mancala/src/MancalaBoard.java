@@ -181,4 +181,61 @@ public class MancalaBoard {
         }
         return true;
     }
+
+    public boolean gameOver(){
+        /*   At first check if player 1 has any stones left in his 6 slots   */
+        int count=0;
+        for(int i=0; i<6; i++){
+            count += board.get(i);
+        }
+        if(count==0){
+            /*      Player 1 has no move left.So all of the player2's stones will be sent to player2's store        */
+            for(int i=7; i<13; i++){
+                count += board.get(i);
+                board.set(i,0);
+            }
+            board.set(player2Store,board.get(player2Store)+count);
+            return true;
+        }
+
+        /*     Now check if player 2 has any stones left in his 6 slots     */
+        count = 0;
+        for(int i=7; i<13; i++){
+            count += board.get(i);
+        }
+        if (count == 0){
+            /*      Player 2 has no move left,So all the player1's stone will be sent to player1's store        */
+
+            for(int i=0; i<6; i++){
+                count += board.get(i);
+                board.set(i,0);
+            }
+            board.set(player1Store,board.get(player1Store)+count);
+            return true;
+        }
+
+        /*     Otherwise the game is not over yet     */
+        return false;
+    }
+
+    public int getPlayer1_stoneCount_inStorage(){
+        return board.get(player1Store);
+    }
+
+    public int getPlayer2_stoneCount_inStorage(){
+        return board.get(player2Store);
+    }
+
+    public int heuristic1(int player){
+        /*
+                Evaluation function is
+                (stones_in_my_storage - stones_in_opponents_storage)
+         */
+        return getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage();
+    }
+
+    public int getHeuristic(int player, int whichHeuristic){
+        if(whichHeuristic == 1) return heuristic1(player);
+        else return -1;
+    }
 }
