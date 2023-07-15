@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3da2530-9ad2-4344-b29c-d416653135d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/AIvsAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mancala/AI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/AI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mancala/AdversarialSearch.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/AdversarialSearch.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mancala/HumanVSHuman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/HumanVSHuman.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mancala/HumanvsAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/HumanvsAI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mancala/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mancala/AIvsAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/AIvsAI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Mancala/MancalaBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/MancalaBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdversarialSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdversarialSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HumanVSHuman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HumanVSHuman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HumanvsAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HumanvsAI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIvsAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIvsAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MancalaBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MancalaBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

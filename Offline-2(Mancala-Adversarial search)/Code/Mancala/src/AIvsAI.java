@@ -6,10 +6,12 @@ public class AIvsAI {
         String s = "";
         AI player1 = new AI(1);
         AI player2 = new AI(2);
-        player2.setDepth(15);
-        player1.setDepth(15);
+        player1.setDepth(6);
+        player2.setDepth(6);
+        player1.setHeuristic(2);
+        player2.setHeuristic(2);
         MancalaBoard mancalaBoard = new MancalaBoard();
-        int player = 2;
+        int player = 1;
         int slot;
         int stat;
         while(true){

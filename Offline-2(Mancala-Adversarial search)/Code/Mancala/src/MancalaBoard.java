@@ -260,6 +260,22 @@ public class MancalaBoard {
         return board.get(player2Store);
     }
 
+    public int getPlayer1_stoneCount(){
+        int cnt = 0;
+        for(int i=0; i<6; i++){
+            cnt += (board.get(i));
+        }
+        return cnt;
+    }
+
+    public int getPlayer2_stoneCount(){
+        int cnt = 0;
+        for(int i=7; i<13; i++){
+            cnt += (board.get(i));
+        }
+        return cnt;
+    }
+
     public int heuristic1(int player){
         /*
                 Evaluation function is
@@ -273,8 +289,25 @@ public class MancalaBoard {
         }
     }
 
+
+    public int heuristic2(int player){
+        /*
+                Evaluation function is
+                W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)
+        */
+        int W1 = 6,W2 = 2;
+        if(player == 1){
+            return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount());
+        }
+        else{
+            return W1*(getPlayer2_stoneCount_inStorage() - getPlayer1_stoneCount_inStorage()) + W2*(getPlayer2_stoneCount() - getPlayer1_stoneCount());
+        }
+    }
+
+
     public int getHeuristic(int player, int whichHeuristic){
         if(whichHeuristic == 1) return heuristic1(player);
+        else if(whichHeuristic == 2) return heuristic2(player);
         else return -1;
     }
 }

@@ -11,7 +11,7 @@ public class AdversarialSearch {
 
     public advSearchNode alphaBetaPruning(boolean isMax,int whichHeuristic,int alpha,int beta,int depth,MancalaBoard mancalaBoard,int turn){
         if(isMax){
-            /*     Player 1 is max and Player 2 is min     */
+
             if(depth == 0 || mancalaBoard.gameOver()){
                 /*   These are the leaves.Base case of the recursion   */
                 return new advSearchNode(mancalaBoard.getHeuristic(player,whichHeuristic),-1);
@@ -67,7 +67,7 @@ public class AdversarialSearch {
             return bestNode;
         }
         else{
-            /*     Player 1 is max and Player 2 is min     */
+
             if(depth == 0 || mancalaBoard.gameOver()){
                 /*   These are the leaves.Base case of the recursion   */
                 return new advSearchNode(mancalaBoard.getHeuristic(player,whichHeuristic),-1);
