@@ -10,10 +10,11 @@ public class HumanvsAI {
         mancalaBoard.printMancalaBoard();
         while (true){
             if(player==1){
+                mancalaBoard.setTurn(player);       //player1's turn
                 System.out.println("Player 1:Enter slot id");
                 String tmp = sc.nextLine();
                 slot = Integer.parseInt(tmp);
-                stat = mancalaBoard.makeAMove(player,slot);
+                stat = mancalaBoard.makeAMove(slot);
                 if(stat == -1){
                     System.out.println("Invalid Move");
                     continue;
@@ -30,11 +31,13 @@ public class HumanvsAI {
             }
             else{
                 System.out.println("Player 2 - AI's move ");
-                AdversarialSearch adversarialSearch = new AdversarialSearch();
-                advSearchNode node = adversarialSearch.alphaBetaPruning(false,1,-AdversarialSearch.infinity,AdversarialSearch.infinity,3,mancalaBoard);
+                mancalaBoard.setTurn(player);       //Player2's turn
+                AdversarialSearch adversarialSearch = new AdversarialSearch(player);
+                advSearchNode node = adversarialSearch.alphaBetaPruning(true,1,-AdversarialSearch.infinity,AdversarialSearch.infinity,10,mancalaBoard,player);
                 slot = node.bestMove;
                 System.out.println(slot);
-                stat = mancalaBoard.makeAMove(player,slot);
+                mancalaBoard.setTurn(player);       //Player2's turn
+                stat = mancalaBoard.makeAMove(slot);
                 if(stat == -1){
                     System.out.println("Invalid Move from AI");
                     String tmp = sc.nextLine();

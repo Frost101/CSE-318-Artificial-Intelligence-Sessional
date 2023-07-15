@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public class MancalaBoard {
     ArrayList<Integer> board;
     int player1Store = 6;       //Player1's Mancala store is in 6 index of the board array
-    int player2Store = 13;   //Player1's Mancala store is in 6 index of the board array
+    int player2Store = 13;      //Player2's Mancala store is in 13 index of the board array
+    MancalaBoard parent;
+    int turn;                   //turn 1 = player1's turn....turn 2 = player2's turn
 
     MancalaBoard(){
         board = new ArrayList<>();
@@ -13,11 +15,11 @@ public class MancalaBoard {
         }
         /*      Add zero marbles to player1's Mancala store              */
         board.add(0);
-        /*       Initialize with 4 stones in each holes of Player 1      */
+        /*       Initialize with 4 stones in each holes of Player 2      */
         for(int i=1; i<=6; i++){
             board.add(4);
         }
-        /*      Add zero marbles to player1's Mancala store               */
+        /*      Add zero marbles to player2's Mancala store               */
         board.add(0);
     }
 
@@ -29,6 +31,24 @@ public class MancalaBoard {
         }
         this.player1Store = mancalaBoard.player1Store;
         this.player2Store = mancalaBoard.player2Store;
+        this.turn = mancalaBoard.turn;
+        this.parent = mancalaBoard.parent;
+    }
+
+    public void setParent(MancalaBoard parent) {
+        this.parent = parent;
+    }
+
+    public MancalaBoard getParent() {
+        return parent;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public void setBoard(ArrayList<Integer> board) {
@@ -76,16 +96,16 @@ public class MancalaBoard {
     }
 
 
-    public int makeAMove(int player,int slot){
+    public int makeAMove(int slot){
         /*       Return -1 for Invalid Move                         */
         /*       Return  1 for extra/free move                      */
         /*       Return  0 for normal move and switch players       */
         /*       Player  1 is you and player 2 is the opponent      */
 
-        if(!checkMoveValidity(player, slot)){
+        if(!checkMoveValidity(slot)){
             return -1;
         }
-        if(player == 1){
+        if(turn == 1){
             int stoneCount = board.get(slot);
             int currentSlot = slot+1;
             while (stoneCount!=0){
@@ -169,9 +189,9 @@ public class MancalaBoard {
         }
     }
 
-    public boolean checkMoveValidity(int player,int slotIndex){
+    public boolean checkMoveValidity(int slotIndex){
         if(slotIndex < 0 || slotIndex >5) return false;
-        if(player == 1){
+        if(turn == 1){
             /*     If that particular slot is empty     */
             if(this.board.get(slotIndex) == 0)return false;
         }
@@ -218,6 +238,20 @@ public class MancalaBoard {
         return false;
     }
 
+
+    public int whoWon(){
+        /*
+            return 1 if player 1 wins
+            return 2 if player 2 wins
+            return 0 = draw
+
+        */
+        if(board.get(player1Store) > board.get(player2Store)) return 1;
+        else if(board.get(player2Store) > board.get(player1Store)) return 2;
+        else return 0;
+    }
+
+
     public int getPlayer1_stoneCount_inStorage(){
         return board.get(player1Store);
     }
@@ -231,7 +265,12 @@ public class MancalaBoard {
                 Evaluation function is
                 (stones_in_my_storage - stones_in_opponents_storage)
          */
-        return getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage();
+        if(player == 1){
+            return getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage();
+        }
+        else{
+            return getPlayer2_stoneCount_inStorage() - getPlayer1_stoneCount_inStorage();
+        }
     }
 
     public int getHeuristic(int player, int whichHeuristic){

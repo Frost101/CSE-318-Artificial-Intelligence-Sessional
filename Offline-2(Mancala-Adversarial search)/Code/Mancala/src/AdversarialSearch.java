@@ -1,20 +1,20 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class AdversarialSearch {
 
     public static final int infinity = 999999;
+    int player;
 
-    AdversarialSearch(){
-
+    AdversarialSearch(int player){
+        this.player = player;
     }
 
-    public advSearchNode alphaBetaPruning(boolean isMax,int whichHeuristic,int alpha,int beta,int depth,MancalaBoard mancalaBoard){
+    public advSearchNode alphaBetaPruning(boolean isMax,int whichHeuristic,int alpha,int beta,int depth,MancalaBoard mancalaBoard,int turn){
         if(isMax){
             /*     Player 1 is max and Player 2 is min     */
             if(depth == 0 || mancalaBoard.gameOver()){
                 /*   These are the leaves.Base case of the recursion   */
-                return new advSearchNode(mancalaBoard.getHeuristic(1,whichHeuristic),-1);
+                return new advSearchNode(mancalaBoard.getHeuristic(player,whichHeuristic),-1);
             }
 
             /*     Construct a node containing the best value and move of this current node     */
@@ -27,24 +27,23 @@ public class AdversarialSearch {
             }
 
             /*    Shuffle the moves for better pruning outcome    */
-            Collections.shuffle(moves);
+            //Collections.shuffle(moves);
             for(int i=0; i<6; i++){
-                /*   First check if it's a valid move or not.Like if the slot is empty or not.
-                *    If the slot is empty then dont take that move   */
-                if(mancalaBoard.getBoard().get(moves.get(i)) == 0){
-                    //That slot is empty.Invalid move
-                    continue;
-                }
                 MancalaBoard temp = new MancalaBoard(mancalaBoard);
-                int stat = temp.makeAMove(1,moves.get(i));
+                temp.setTurn(turn);
+                temp.setParent(mancalaBoard);
+                int stat = temp.makeAMove(moves.get(i));
                 advSearchNode returnNode;
                 if(stat == 0){
                     /*      Switch player to min        */
-                    returnNode = alphaBetaPruning(false,whichHeuristic,alpha,beta,depth-1,temp);
+                    if(turn == 1) returnNode = alphaBetaPruning(false,whichHeuristic,alpha,beta,depth-1,temp,2);
+                    else returnNode = alphaBetaPruning(false,whichHeuristic,alpha,beta,depth-1,temp,1);
+                    //System.out.println(returnNode.bestValue + "=======" + returnNode.bestMove + "======" + depth);
                 }
                 else if(stat == 1){
                     /*      You got a free move.So max's turn again     */
-                    returnNode = alphaBetaPruning(true,whichHeuristic,alpha,beta,depth-1,temp);
+                    returnNode = alphaBetaPruning(true,whichHeuristic,alpha,beta,depth-1,temp,turn);
+                    //System.out.println(returnNode.bestValue + "=======" + returnNode.bestMove + "======" + depth);
                 }
                 else{
                     /*   Invalid move.continue   */
@@ -71,7 +70,7 @@ public class AdversarialSearch {
             /*     Player 1 is max and Player 2 is min     */
             if(depth == 0 || mancalaBoard.gameOver()){
                 /*   These are the leaves.Base case of the recursion   */
-                return new advSearchNode(mancalaBoard.getHeuristic(2,whichHeuristic),-1);
+                return new advSearchNode(mancalaBoard.getHeuristic(player,whichHeuristic),-1);
             }
 
             /*     Construct a node containing the best value and move of this current node     */
@@ -84,25 +83,26 @@ public class AdversarialSearch {
             }
 
             /*    Shuffle the moves for better pruning outcome    */
-            Collections.shuffle(moves);
+            //Collections.shuffle(moves);
             for(int i=0; i<6; i++){
-                /*   First check if it's a valid move or not.Like if the slot is empty or not.
-                 *    If the slot is empty then dont take that move   */
-                if(mancalaBoard.getBoard().get(moves.get(i)+7) == 0){
-                    //That slot is empty.Invalid move
-                    continue;
-                }
                 MancalaBoard temp = new MancalaBoard(mancalaBoard);
-                int stat = temp.makeAMove(2,moves.get(i));
+                temp.setTurn(turn);
+                temp.setParent(mancalaBoard);
+                int stat = temp.makeAMove(moves.get(i));
                 advSearchNode returnNode;
                 if(stat == 0){
                     /*      Switch player to max        */
-                    returnNode = alphaBetaPruning(true,whichHeuristic,alpha,beta,depth-1,temp);
+                    if(turn == 1) returnNode = alphaBetaPruning(true,whichHeuristic,alpha,beta,depth-1,temp,2);
+                    else returnNode = alphaBetaPruning(true,whichHeuristic,alpha,beta,depth-1,temp,1);
+
+                    //System.out.println(returnNode.bestValue + "=======" + returnNode.bestMove + "======" + depth);
 
                 }
                 else if(stat == 1){
                     /*      You got a free move.So min's turn again     */
-                    returnNode = alphaBetaPruning(false,whichHeuristic,alpha,beta,depth-1,temp);
+                    returnNode = alphaBetaPruning(false,whichHeuristic,alpha,beta,depth-1,temp,turn);
+
+                    //System.out.println(returnNode.bestValue + "=======" + returnNode.bestMove + "======" + depth);
                 }
                 else{
 

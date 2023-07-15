@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3da2530-9ad2-4344-b29c-d416653135d6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AIvsAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mancala/AI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/AI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mancala/AdversarialSearch.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/AdversarialSearch.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Mancala/HumanVSHuman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/HumanVSHuman.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mancala/HumanvsAI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/HumanvsAI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Mancala/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Mancala/MancalaBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mancala/MancalaBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdversarialSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdversarialSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HumanVSHuman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HumanVSHuman.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HumanvsAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HumanvsAI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MancalaBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MancalaBoard.java" afterDir="false" />
@@ -15,6 +21,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
@@ -33,7 +46,14 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
   </component>
-  <component name="RunManager" selected="Application.HumanvsAI">
+  <component name="RunManager" selected="Application.AIvsAI">
+    <configuration name="AIvsAI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AIvsAI" />
+      <module name="Mancala" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HumanvsAI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="HumanvsAI" />
       <module name="Mancala" />
@@ -50,6 +70,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AIvsAI" />
         <item itemvalue="Application.HumanvsAI" />
         <item itemvalue="Application.Main" />
       </list>
@@ -65,5 +86,17 @@
       <updated>1688826407425</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

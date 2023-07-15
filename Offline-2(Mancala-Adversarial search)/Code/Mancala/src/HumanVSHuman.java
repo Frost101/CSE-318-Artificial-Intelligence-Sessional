@@ -13,7 +13,8 @@ public class HumanVSHuman {
                 System.out.println("Player 1:Enter slot id");
                 String tmp = sc.nextLine();
                 slot = Integer.parseInt(tmp);
-                stat = mancalaBoard.makeAMove(player,slot);
+                mancalaBoard.setTurn(player);
+                stat = mancalaBoard.makeAMove(slot);
                 if(stat == -1){
                     System.out.println("Invalid Move");
                     continue;
@@ -32,7 +33,8 @@ public class HumanVSHuman {
                 System.out.println("Player 2 - Enter Slot ID: ");
                 String tmp = sc.nextLine();
                 slot = Integer.parseInt(tmp);
-                stat = mancalaBoard.makeAMove(player,slot);
+                mancalaBoard.setTurn(player);
+                stat = mancalaBoard.makeAMove(slot);
                 if(stat == -1){
                     System.out.println("Invalid Move");
                     continue;

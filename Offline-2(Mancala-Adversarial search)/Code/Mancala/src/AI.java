@@ -1,14 +1,24 @@
 public class AI {
     private int depth;
     private int heuristic;
+    private int player;
 
-    AI(){
+    AI(int player){
         /*   Default Constructor
              Default depth = 4;
              Default heuristic = 4; best one
         */
+        this.player = player;
         this.depth = 4;
-        this.heuristic = 4;
+        this.heuristic = 1;
+    }
+
+    public void setPlayer(int player) {
+        this.player = player;
+    }
+
+    public int getPlayer() {
+        return player;
     }
 
     public void setDepth(int depth) {
