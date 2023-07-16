@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AdversarialSearch {
 
@@ -11,7 +12,7 @@ public class AdversarialSearch {
 
     public advSearchNode alphaBetaPruning(boolean isMax,int whichHeuristic,int alpha,int beta,int depth,MancalaBoard mancalaBoard,int turn){
         if(isMax){
-
+            mancalaBoard.setTurn(turn);         //Set parent's turn
             if(depth == 0 || mancalaBoard.gameOver()){
                 /*   These are the leaves.Base case of the recursion   */
                 return new advSearchNode(mancalaBoard.getHeuristic(player,whichHeuristic),-1);
@@ -27,7 +28,7 @@ public class AdversarialSearch {
             }
 
             /*    Shuffle the moves for better pruning outcome    */
-            //Collections.shuffle(moves);
+            Collections.shuffle(moves);
             for(int i=0; i<6; i++){
                 MancalaBoard temp = new MancalaBoard(mancalaBoard);
                 temp.setTurn(turn);
@@ -42,8 +43,14 @@ public class AdversarialSearch {
                 }
                 else if(stat == 1){
                     /*      You got a free move.So max's turn again     */
+
+                    //Added for heuristic 3
+                    if(turn == 1)temp.setMoveEarned_p1(temp.getMoveEarned_p1()+1);      //player 1 got a free move
+                    else temp.setMoveEarned_p2(temp.getMoveEarned_p2()+1);              //player 2 got a free move
+
                     returnNode = alphaBetaPruning(true,whichHeuristic,alpha,beta,depth-1,temp,turn);
                     //System.out.println(returnNode.bestValue + "=======" + returnNode.bestMove + "======" + depth);
+
                 }
                 else{
                     /*   Invalid move.continue   */
@@ -67,7 +74,7 @@ public class AdversarialSearch {
             return bestNode;
         }
         else{
-
+            mancalaBoard.setTurn(turn);             //Set parent's turn
             if(depth == 0 || mancalaBoard.gameOver()){
                 /*   These are the leaves.Base case of the recursion   */
                 return new advSearchNode(mancalaBoard.getHeuristic(player,whichHeuristic),-1);
@@ -83,7 +90,7 @@ public class AdversarialSearch {
             }
 
             /*    Shuffle the moves for better pruning outcome    */
-            //Collections.shuffle(moves);
+            Collections.shuffle(moves);
             for(int i=0; i<6; i++){
                 MancalaBoard temp = new MancalaBoard(mancalaBoard);
                 temp.setTurn(turn);
@@ -100,6 +107,11 @@ public class AdversarialSearch {
                 }
                 else if(stat == 1){
                     /*      You got a free move.So min's turn again     */
+
+                    //Added for heuristic 3
+                    if(turn == 1)temp.setMoveEarned_p1(temp.getMoveEarned_p1()+1);      //player 1 got a free move
+                    else temp.setMoveEarned_p2(temp.getMoveEarned_p2()+1);              //player 2 got a free move
+
                     returnNode = alphaBetaPruning(false,whichHeuristic,alpha,beta,depth-1,temp,turn);
 
                     //System.out.println(returnNode.bestValue + "=======" + returnNode.bestMove + "======" + depth);

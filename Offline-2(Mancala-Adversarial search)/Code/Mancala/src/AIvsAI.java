@@ -6,15 +6,20 @@ public class AIvsAI {
         String s = "";
         AI player1 = new AI(1);
         AI player2 = new AI(2);
-        player1.setDepth(6);
-        player2.setDepth(6);
-        player1.setHeuristic(2);
-        player2.setHeuristic(2);
+        player1.setDepth(5);
+        player2.setDepth(5);
+        player1.setHeuristic(1);
+        player2.setHeuristic(4);
         MancalaBoard mancalaBoard = new MancalaBoard();
         int player = 1;
         int slot;
         int stat;
         while(true){
+            //Setup for heuristic 3 & 4
+            mancalaBoard.setMoveEarned_p1(0);
+            mancalaBoard.setMoveEarned_p2(0);
+            mancalaBoard.setStonesCaptured_p1(0);
+            mancalaBoard.setStonesCaptured_p2(0);
             if(mancalaBoard.gameOver()){
                 System.out.println("---------  Game Over!  --------");
                 mancalaBoard.printMancalaBoard();
@@ -32,8 +37,9 @@ public class AIvsAI {
             }
             if(player == 1){
                 System.out.println("AI-player1's move ");
-                s = sc.nextLine();                      //Wait for key press
+                //s = sc.nextLine();                      //Wait for key press
                 mancalaBoard.setTurn(player1.getPlayer());       //Player1's turn
+
                 AdversarialSearch adversarialSearch = new AdversarialSearch(player1.getPlayer());
                 advSearchNode node = adversarialSearch.alphaBetaPruning(true,player1.getHeuristic(),-AdversarialSearch.infinity,AdversarialSearch.infinity,player1.getDepth(),mancalaBoard,player1.getPlayer());
                 slot = node.bestMove;
@@ -57,7 +63,7 @@ public class AIvsAI {
             }
             else{
                 System.out.println("AI-player 2's move ");
-                s = sc.nextLine();                       //Wait for key press
+                //s = sc.nextLine();                       //Wait for key press
                 mancalaBoard.setTurn(player2.getPlayer());       //Player2's turn
                 AdversarialSearch adversarialSearch = new AdversarialSearch(player2.getPlayer());
                 advSearchNode node = adversarialSearch.alphaBetaPruning(true,player2.getHeuristic(),-AdversarialSearch.infinity,AdversarialSearch.infinity,player2.getDepth(),mancalaBoard,player2.getPlayer());

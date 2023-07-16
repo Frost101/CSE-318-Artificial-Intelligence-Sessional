@@ -7,6 +7,12 @@ public class MancalaBoard {
     MancalaBoard parent;
     int turn;                   //turn 1 = player1's turn....turn 2 = player2's turn
 
+    //Added for heuristics
+    int moveEarned_p1;
+    int moveEarned_p2;
+    int stonesCaptured_p1;
+    int stonesCaptured_p2;
+
     MancalaBoard(){
         board = new ArrayList<>();
         /*       Initialize with 4 stones in each holes of Player 1      */
@@ -21,6 +27,12 @@ public class MancalaBoard {
         }
         /*      Add zero marbles to player2's Mancala store               */
         board.add(0);
+
+        //Added for heuristics
+        int moveEarned_p1;
+        int moveEarned_p2;
+        int stonesCaptured_p1;
+        int stonesCaptured_p2;
     }
 
     MancalaBoard(MancalaBoard mancalaBoard){
@@ -33,6 +45,44 @@ public class MancalaBoard {
         this.player2Store = mancalaBoard.player2Store;
         this.turn = mancalaBoard.turn;
         this.parent = mancalaBoard.parent;
+
+        //Added for heuristics
+        this.moveEarned_p1 = mancalaBoard.moveEarned_p1;
+        this.moveEarned_p2 = mancalaBoard.moveEarned_p2;
+        this.stonesCaptured_p1 = mancalaBoard.stonesCaptured_p1;
+        this.stonesCaptured_p2 = mancalaBoard.stonesCaptured_p2;
+    }
+
+    public void setMoveEarned_p1(int moveEarned_p1) {
+        this.moveEarned_p1 = moveEarned_p1;
+    }
+
+    public int getMoveEarned_p1() {
+        return moveEarned_p1;
+    }
+
+    public void setMoveEarned_p2(int moveEarned_p2) {
+        this.moveEarned_p2 = moveEarned_p2;
+    }
+
+    public int getMoveEarned_p2() {
+        return moveEarned_p2;
+    }
+
+    public void setStonesCaptured_p1(int stonesCaptured_p1) {
+        this.stonesCaptured_p1 = stonesCaptured_p1;
+    }
+
+    public int getStonesCaptured_p1() {
+        return stonesCaptured_p1;
+    }
+
+    public void setStonesCaptured_p2(int stonesCaptured_p2) {
+        this.stonesCaptured_p2 = stonesCaptured_p2;
+    }
+
+    public int getStonesCaptured_p2() {
+        return stonesCaptured_p2;
     }
 
     public void setParent(MancalaBoard parent) {
@@ -276,6 +326,35 @@ public class MancalaBoard {
         return cnt;
     }
 
+
+    public int getStonesCaptured(int player){
+        if(parent == null){
+            System.out.println("null paisi...");
+            if(player == 1)return board.get(player1Store);
+            else return board.get(player2Store);
+        }
+        else if(parent.getTurn() == player){
+            //max captured the stones to reach this leaf
+            if(player == 1){
+                return this.board.get(player1Store) - parent.board.get(player1Store);
+            }
+            else{
+                return this.board.get(player2Store) - parent.board.get(player2Store);
+            }
+        }
+        else{
+            //min captured the stones to reach this leaf
+            if(player == 1){
+                //If maximizing player is 1,and previous move was his opponent's(player 2), then find the difference and return negative value(Because player2's gain is loss to player 1)
+                return -(this.board.get(player2Store) - parent.board.get(player2Store));
+            }
+            else{
+                //If maximizing player is 2,and previous move was his opponent's(player 1), then find the difference and return negative value(Because player1's gain is loss to player 2)
+                return -(this.board.get(player1Store) - parent.board.get(player1Store));
+            }
+        }
+    }
+
     public int heuristic1(int player){
         /*
                 Evaluation function is
@@ -295,7 +374,7 @@ public class MancalaBoard {
                 Evaluation function is
                 W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)
         */
-        int W1 = 6,W2 = 2;
+        int W1 = 4,W2 = 2;
         if(player == 1){
             return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount());
         }
@@ -305,9 +384,47 @@ public class MancalaBoard {
     }
 
 
+    public int heuristic3(int player){
+        /*
+                Evaluation function is
+                W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)+W3*(additional move earned)
+        */
+        int W1 = 4,W2 = 2,W3 = 4;
+        if(player == 1){
+            //System.out.println("********   "+getMoveEarned_p1());
+            return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount()) + W3*(getMoveEarned_p1() - getMoveEarned_p2());
+        }
+        else{
+            //System.out.println("########    "+getMoveEarned_p2());
+            return W1*(getPlayer2_stoneCount_inStorage() - getPlayer1_stoneCount_inStorage()) + W2*(getPlayer2_stoneCount() - getPlayer1_stoneCount()) + W3*(getMoveEarned_p2() - getMoveEarned_p1());
+        }
+    }
+
+
+    public int heuristic4(int player){
+        /*
+                Evaluation function is
+                W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)+W3*(additional move earned)+W4(stones captured)
+        */
+        int W1 = 4,W2 = 2,W3 = 4,W4 = 2;
+        if(player == 1){
+            //System.out.println("********   "+getStonesCaptured(player));
+            return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount()) + W3*(getMoveEarned_p1() - getMoveEarned_p2()) + W4*(getStonesCaptured(player));
+        }
+        else{
+            //System.out.println("########    "+getStonesCaptured(player));
+            return W1*(getPlayer2_stoneCount_inStorage() - getPlayer1_stoneCount_inStorage()) + W2*(getPlayer2_stoneCount() - getPlayer1_stoneCount()) + W3*(getMoveEarned_p2() - getMoveEarned_p1()) + W4*(getStonesCaptured(player));
+        }
+    }
+
+
+
     public int getHeuristic(int player, int whichHeuristic){
         if(whichHeuristic == 1) return heuristic1(player);
         else if(whichHeuristic == 2) return heuristic2(player);
+        else if(whichHeuristic == 3) return heuristic3(player);
+        else if(whichHeuristic == 4) return heuristic4(player);
+
         else return -1;
     }
 }
