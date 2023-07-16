@@ -6,10 +6,10 @@ public class AIvsAI {
         String s = "";
         AI player1 = new AI(1);
         AI player2 = new AI(2);
-        player1.setDepth(5);
-        player2.setDepth(5);
-        player1.setHeuristic(1);
-        player2.setHeuristic(4);
+        player1.setDepth(10);
+        player2.setDepth(10);
+        player1.setHeuristic(4);
+        player2.setHeuristic(1);
         MancalaBoard mancalaBoard = new MancalaBoard();
         int player = 1;
         int slot;
@@ -36,7 +36,7 @@ public class AIvsAI {
                 break;
             }
             if(player == 1){
-                System.out.println("AI-player1's move ");
+                System.out.println("-------- AI-player1's move ---------");
                 //s = sc.nextLine();                      //Wait for key press
                 mancalaBoard.setTurn(player1.getPlayer());       //Player1's turn
 
@@ -53,7 +53,7 @@ public class AIvsAI {
                 }
                 else if(stat == 1){
                     mancalaBoard.printMancalaBoard();
-                    System.out.println("Free Move for AI-player 1 !!!");
+                    System.out.println("*********  Free Move for AI-player 1 !!!  **********");
                     continue;
                 }
                 else{
@@ -62,7 +62,7 @@ public class AIvsAI {
                 }
             }
             else{
-                System.out.println("AI-player 2's move ");
+                System.out.println("---------- AI-player 2's move  ---------");
                 //s = sc.nextLine();                       //Wait for key press
                 mancalaBoard.setTurn(player2.getPlayer());       //Player2's turn
                 AdversarialSearch adversarialSearch = new AdversarialSearch(player2.getPlayer());
@@ -78,7 +78,7 @@ public class AIvsAI {
                 }
                 else if(stat == 1){
                     mancalaBoard.printMancalaBoard();
-                    System.out.println("Free Move for AI-player 2!!!");
+                    System.out.println("********** Free Move for AI-player 2!!!  **********");
                     continue;
                 }
                 else{

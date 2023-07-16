@@ -130,7 +130,7 @@ public class MancalaBoard {
 
     public void printMancalaBoard(){
 
-        System.out.println("\t\t\t\tPlayer 2");
+        System.out.println("\t\t\t\tPlayer 2's slots");
         for(int i=12; i>=7; i--){
             System.out.print("\t" + this.board.get(i) + "\t");
         }
@@ -142,7 +142,7 @@ public class MancalaBoard {
             System.out.print("\t" + this.board.get(i) + "\t");
         }
         System.out.println();
-        System.out.println("\t\t\t\tPlayer 1");
+        System.out.println("\t\t\t\tPlayer 1's slots");
     }
 
 
@@ -164,7 +164,10 @@ public class MancalaBoard {
                     continue;
                 }
                 board.set(currentSlot, board.get(currentSlot)+1);   //Increase the no of stones in current slot
-                stoneCount--;
+                if(currentSlot == player1Store){
+                    setStonesCaptured_p1(getStonesCaptured_p1()+1); //Update stones captured of player 1
+                }
+                stoneCount--;                                       //Decrease stone count
                 board.set(slot, board.get(slot)-1);                 //Decrease the no if stones from the first selected slot
 
                 /*    Now Check for the free turn
@@ -185,6 +188,7 @@ public class MancalaBoard {
                     int oppositeSlot = 12 - currentSlot;
                     if(oppositeSlot >= 7 && oppositeSlot <= 12 && board.get(currentSlot) == 1 && board.get(oppositeSlot) > 0){
                         board.set(player1Store, board.get(player1Store) + board.get(oppositeSlot) + board.get(currentSlot));  //Player will get the stones of his current store and opposite store
+                        setStonesCaptured_p1(getStonesCaptured_p1() + board.get(oppositeSlot) + board.get(currentSlot));      //Update stones captured of player 1
                         board.set(currentSlot,0);
                         board.set(oppositeSlot,0);
                         return 0;       //Normal Move,Player switch
@@ -204,6 +208,9 @@ public class MancalaBoard {
                     continue;
                 }
                 board.set(currentSlot, board.get(currentSlot)+1);   //Increase the no of stones in current slot
+                if(currentSlot == player2Store){
+                    setStonesCaptured_p2(getStonesCaptured_p2()+1); //Update stones captured of player 2
+                }
                 stoneCount--;
                 board.set(slot, board.get(slot)-1);                 //Decrease the no if stones from the first selected slot
 
@@ -225,6 +232,7 @@ public class MancalaBoard {
                     int oppositeSlot = 12 - currentSlot;
                     if(oppositeSlot >= 0 && oppositeSlot <= 5 && board.get(currentSlot) == 1 && board.get(oppositeSlot) > 0){
                         board.set(player2Store, board.get(player2Store) + board.get(oppositeSlot) + board.get(currentSlot));  //Player will get the stones of his current store and opposite store
+                        setStonesCaptured_p2(getStonesCaptured_p2() + board.get(oppositeSlot) + board.get(currentSlot));      //Update stones captured of player 2
                         board.set(currentSlot,0);
                         board.set(oppositeSlot,0);
                         return 0;       //Normal Move,Player switch
@@ -265,6 +273,7 @@ public class MancalaBoard {
                 board.set(i,0);
             }
             board.set(player2Store,board.get(player2Store)+count);
+            setStonesCaptured_p2(getStonesCaptured_p2()+count);         //Update stones captured of player 2
             return true;
         }
 
@@ -281,6 +290,7 @@ public class MancalaBoard {
                 board.set(i,0);
             }
             board.set(player1Store,board.get(player1Store)+count);
+            setStonesCaptured_p1(getStonesCaptured_p1()+count);         //Update stones captured of player 1
             return true;
         }
 
@@ -374,7 +384,7 @@ public class MancalaBoard {
                 Evaluation function is
                 W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)
         */
-        int W1 = 4,W2 = 2;
+        int W1 = 12,W2 = 2;
         if(player == 1){
             return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount());
         }
@@ -389,7 +399,7 @@ public class MancalaBoard {
                 Evaluation function is
                 W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)+W3*(additional move earned)
         */
-        int W1 = 4,W2 = 2,W3 = 4;
+        int W1 = 12,W2 = 2,W3 = 4;
         if(player == 1){
             //System.out.println("********   "+getMoveEarned_p1());
             return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount()) + W3*(getMoveEarned_p1() - getMoveEarned_p2());
@@ -406,14 +416,14 @@ public class MancalaBoard {
                 Evaluation function is
                 W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)+W3*(additional move earned)+W4(stones captured)
         */
-        int W1 = 4,W2 = 2,W3 = 4,W4 = 2;
+        int W1 = 12,W2 = 2,W3 = 2,W4 = 4;
         if(player == 1){
-            //System.out.println("********   "+getStonesCaptured(player));
-            return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount()) + W3*(getMoveEarned_p1() - getMoveEarned_p2()) + W4*(getStonesCaptured(player));
+            //System.out.println("********   "+ (getStonesCaptured_p1() - getStonesCaptured_p2()));
+            return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount()) + W3*(getMoveEarned_p1() - getMoveEarned_p2()) + W4*(getStonesCaptured_p1() - getStonesCaptured_p2());
         }
         else{
-            //System.out.println("########    "+getStonesCaptured(player));
-            return W1*(getPlayer2_stoneCount_inStorage() - getPlayer1_stoneCount_inStorage()) + W2*(getPlayer2_stoneCount() - getPlayer1_stoneCount()) + W3*(getMoveEarned_p2() - getMoveEarned_p1()) + W4*(getStonesCaptured(player));
+            //System.out.println("########    "+ (getStonesCaptured_p2() - getStonesCaptured_p1()));
+            return W1*(getPlayer2_stoneCount_inStorage() - getPlayer1_stoneCount_inStorage()) + W2*(getPlayer2_stoneCount() - getPlayer1_stoneCount()) + W3*(getMoveEarned_p2() - getMoveEarned_p1()) + W4*(getStonesCaptured_p2() - getStonesCaptured_p1());
         }
     }
 

@@ -9,6 +9,21 @@ public class HumanVSHuman {
         Scanner sc = new Scanner(System.in);
         mancalaBoard.printMancalaBoard();
         while (true){
+            if(mancalaBoard.gameOver()){
+                System.out.println("---------  Game Over!  --------");
+                mancalaBoard.printMancalaBoard();
+                int win = mancalaBoard.whoWon();
+                if(win == 1){
+                    System.out.println("****** Player 1 wins  *******");
+                }
+                else if(win == 2){
+                    System.out.println("****** Player 2 wins  *******");
+                }
+                else{
+                    System.out.println("*******  Match drawn  ********");
+                }
+                break;
+            }
             if(player==1){
                 System.out.println("Player 1:Enter slot id");
                 String tmp = sc.nextLine();
