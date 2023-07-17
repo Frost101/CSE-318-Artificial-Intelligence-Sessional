@@ -416,7 +416,7 @@ public class MancalaBoard {
                 Evaluation function is
                 W1*(stones in my storage-stones in opponents storage)+W2*(stones on my side - stones on opponents side)+W3*(additional move earned)+W4(stones captured)
         */
-        int W1 = 12,W2 = 2,W3 = 2,W4 = 4;
+        int W1 = 12,W2 = 2,W3 = 4,W4 = 4;
         if(player == 1){
             //System.out.println("********   "+ (getStonesCaptured_p1() - getStonesCaptured_p2()));
             return W1*(getPlayer1_stoneCount_inStorage() - getPlayer2_stoneCount_inStorage()) + W2*(getPlayer1_stoneCount() - getPlayer2_stoneCount()) + W3*(getMoveEarned_p1() - getMoveEarned_p2()) + W4*(getStonesCaptured_p1() - getStonesCaptured_p2());
