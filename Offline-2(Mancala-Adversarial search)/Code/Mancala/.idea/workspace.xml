@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3da2530-9ad2-4344-b29c-d416653135d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Statistics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MancalaBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MancalaBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AIvsAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AIvsAI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +29,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
   </component>
-  <component name="RunManager" selected="Application.Statistics">
+  <component name="RunManager" selected="Application.AIvsAI">
     <configuration name="AIvsAI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AIvsAI" />
       <module name="Mancala" />
@@ -73,9 +73,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AIvsAI" />
         <item itemvalue="Application.Statistics" />
         <item itemvalue="Application.HumanvsAI" />
-        <item itemvalue="Application.AIvsAI" />
         <item itemvalue="Application.HumanVSHuman" />
         <item itemvalue="Application.HeuristicsVsHeuristics" />
       </list>
